@@ -101,7 +101,7 @@ function Atmosphere({ stage, photos }) {
       </div>
       <div className="atmosphere-photo-memory">
         {backgroundPhotos.map((photo, index) => (
-          <img key={photo} src={photo} alt="" style={{ '--memory-index': index }} />
+          <img key={photo} src={photo} alt="" loading="lazy" style={{ '--memory-index': index }} />
         ))}
       </div>
       <div className="atmosphere-photo-heart">
@@ -110,6 +110,7 @@ function Atmosphere({ stage, photos }) {
             key={`${photo}-heart`}
             src={photo}
             alt=""
+            loading="lazy"
             style={{
               '--heart-index': index,
               left: `${30 + ((index % 3) * 17)}%`,
@@ -195,7 +196,14 @@ function App() {
   const [frontMemory, setFrontMemory] = useState(0);
   const audioRef = useRef(null);
 
+  const startMusic = () => {
+    if (!audioRef.current) return;
+    audioRef.current.volume = 0.8;
+    audioRef.current.play().catch(() => undefined);
+  };
+
   const advanceStory = () => {
+    startMusic();
     setStage((current) => {
       if (current === 8) return 10;
       if (current === 11) return 13;
@@ -231,20 +239,18 @@ function App() {
     return undefined;
   }, [stage]);
 
-  const musicSource = '/assets/WhatsApp Audio 2026-09-25 at 00.09.42.mpeg';
+  const musicSource = '/assets/birthday-song.mp3';
 
   useEffect(() => {
-    const startMusic = () => {
-      audioRef.current?.play().catch(() => undefined);
-    };
-
     startMusic();
     window.addEventListener('pointerdown', startMusic, { once: true });
     window.addEventListener('keydown', startMusic, { once: true });
+    window.addEventListener('touchstart', startMusic, { once: true, passive: true });
 
     return () => {
       window.removeEventListener('pointerdown', startMusic);
       window.removeEventListener('keydown', startMusic);
+      window.removeEventListener('touchstart', startMusic);
     };
   }, []);
 

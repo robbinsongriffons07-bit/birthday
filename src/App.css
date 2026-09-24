@@ -1780,6 +1780,22 @@
 }
 
 @media (max-width: 600px) {
+  .title-sparkles span:nth-child(n + 61),
+  .atmosphere-confetti span:nth-child(n + 13),
+  .atmosphere-petals span:nth-child(n + 7) {
+    display: none;
+  }
+
+  .atmosphere-photo-memory {
+    filter: blur(11px) saturate(0.75);
+    transform: scale(1.05);
+  }
+
+  .atmosphere-photo-memory img,
+  .atmosphere-photo-heart img {
+    opacity: 0.09;
+  }
+
   .birthday-world {
     min-height: 100svh;
     height: 100svh;
