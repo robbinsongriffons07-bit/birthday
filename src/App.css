@@ -1780,26 +1780,33 @@
 }
 
 @media (max-width: 600px) {
+  .birthday-world {
+    min-height: 100svh;
+    height: 100svh;
+  }
+
   .story-continue {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 18px;
+    right: 18px;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    min-width: 132px;
+    transform: none;
   }
 
   .story-back {
-    left: 50%;
-    bottom: 68px;
-    transform: translateX(-50%);
+    left: 18px;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    min-width: 96px;
+    transform: none;
   }
 
   .story-continue:hover,
   .story-continue:focus-visible {
-    transform: translateX(50%) translateY(-2px);
+    transform: translateY(-2px);
   }
 
   .story-back:hover,
   .story-back:focus-visible {
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateY(-2px);
   }
 }
 
