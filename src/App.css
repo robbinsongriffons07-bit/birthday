@@ -728,6 +728,41 @@
   animation: skyRise 1.6s ease 0.2s forwards;
 }
 
+.royal-crown {
+  position: relative;
+  width: 58px;
+  height: 44px;
+  margin-bottom: 1.1rem;
+  border: 3px solid #ffd28c;
+  border-top: 0;
+  clip-path: polygon(0 0, 18% 42%, 36% 8%, 52% 42%, 70% 8%, 100% 0, 87% 100%, 12% 100%);
+  background: linear-gradient(180deg, #ffe9a9, #e99c58);
+  box-shadow: 0 0 22px rgba(255, 205, 124, 0.8);
+  animation: crownFloat 3s ease-in-out infinite alternate;
+}
+
+.royal-crown::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 8px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #ff7a9f;
+  box-shadow: 0 0 12px #ff7a9f;
+}
+
+.royal-copy {
+  margin: 1rem 0 0;
+  color: rgba(255, 226, 188, 0.86);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2.3vw, 2rem);
+  opacity: 0;
+  animation: fadeInText 1s ease 0.8s forwards;
+}
+
 .moon-character {
   position: relative;
   width: clamp(220px, 32vw, 340px);
@@ -1182,6 +1217,162 @@
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
+}
+
+.memory-choice-wrap {
+  width: min(92vw, 900px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  text-align: center;
+}
+
+.memory-choice-heading,
+.wishes-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(255, 246, 225, 0.96);
+}
+
+.memory-choice-heading span,
+.wishes-heading span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.7rem, 3.5vw, 3rem);
+}
+
+.memory-choice-heading small,
+.wishes-heading small {
+  color: rgba(255, 222, 188, 0.82);
+  font-size: clamp(0.62rem, 1.1vw, 0.85rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.memory-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.7rem, 2vw, 1.5rem);
+  width: 100%;
+}
+
+.memory-choice {
+  position: relative;
+  min-height: 190px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 235, 198, 0.3);
+  border-radius: 16px;
+  background: rgba(54, 23, 45, 0.6);
+  color: #fff3e1;
+  cursor: pointer;
+  box-shadow: 0 18px 30px rgba(27, 8, 23, 0.28);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.memory-choice:hover,
+.memory-choice:focus-visible,
+.memory-choice.is-selected {
+  transform: translateY(-9px) scale(1.03);
+  border-color: rgba(255, 211, 147, 0.9);
+  box-shadow: 0 22px 38px rgba(30, 8, 26, 0.42), 0 0 24px rgba(255, 185, 127, 0.3);
+}
+
+.memory-choice img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  object-fit: cover;
+  opacity: 0.82;
+  transition: transform 0.6s ease, opacity 0.35s ease;
+}
+
+.memory-choice:hover img,
+.memory-choice.is-selected img {
+  transform: scale(1.08) rotate(1deg);
+  opacity: 1;
+}
+
+.memory-choice span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.7rem 0.45rem;
+  background: linear-gradient(transparent, rgba(31, 10, 26, 0.9));
+  font-size: clamp(0.66rem, 1vw, 0.82rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.memory-choice-message {
+  width: min(90vw, 640px);
+  min-height: 72px;
+  color: rgba(255, 241, 218, 0.96);
+  animation: memoryMessageIn 0.55s ease both;
+}
+
+.memory-choice-message strong {
+  color: #ffb5d4;
+  font-size: 1.1rem;
+}
+
+.memory-choice-message p {
+  margin: 0.4rem 0 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.wishes-scene {
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.wish-orbit {
+  position: relative;
+  width: min(76vw, 560px);
+  height: min(58vw, 420px);
+  border: 1px solid rgba(255, 215, 157, 0.17);
+  border-radius: 50%;
+  box-shadow: inset 0 0 45px rgba(255, 192, 134, 0.1), 0 0 30px rgba(255, 165, 132, 0.12);
+  animation: wishOrbit 16s linear infinite;
+}
+
+.wish-point {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 230, 179, 0.6);
+  border-radius: 50%;
+  background: rgba(102, 35, 67, 0.88);
+  color: #ffe6ae;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transform: translate(-50%, -50%) rotate(var(--wish-rotation));
+  box-shadow: 0 0 13px rgba(255, 183, 119, 0.25);
+  animation: wishPointPulse 2.4s ease-in-out infinite alternate;
+}
+
+.wish-point:hover,
+.wish-point:focus-visible,
+.wish-point.is-open {
+  background: #ff87b7;
+  color: #41152b;
+  transform: translate(-50%, -50%) scale(1.22);
+  box-shadow: 0 0 24px rgba(255, 135, 183, 0.8);
+}
+
+.wish-message {
+  width: min(88vw, 620px);
+  min-height: 54px;
+  color: rgba(255, 239, 213, 0.96);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.25rem, 2.3vw, 2rem);
+  text-align: center;
+  animation: memoryMessageIn 0.55s ease both;
 }
 
 .single-photo-frame {
@@ -1796,6 +1987,49 @@
     opacity: 0.09;
   }
 
+  .memory-choice-wrap {
+    gap: 0.85rem;
+  }
+
+  .memory-choice-heading span,
+  .wishes-heading span {
+    font-size: 1.7rem;
+  }
+
+  .memory-choice-grid {
+    gap: 0.45rem;
+  }
+
+  .memory-choice {
+    min-height: 132px;
+    border-radius: 10px;
+  }
+
+  .memory-choice img {
+    min-height: 132px;
+  }
+
+  .memory-choice span {
+    padding: 0.45rem 0.2rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.04em;
+  }
+
+  .memory-choice-message {
+    min-height: 62px;
+  }
+
+  .wish-orbit {
+    width: 86vw;
+    height: 58vw;
+  }
+
+  .wish-point {
+    width: 29px;
+    height: 29px;
+    font-size: 0.6rem;
+  }
+
   .birthday-world {
     min-height: 100svh;
     height: 100svh;
@@ -1913,6 +2147,26 @@
 @keyframes nameMessageIn {
   0% { opacity: 0; transform: translateY(20px) scale(0.94); filter: blur(8px); }
   100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes crownFloat {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-9px) rotate(3deg); }
+}
+
+@keyframes memoryMessageIn {
+  0% { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes wishOrbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes wishPointPulse {
+  0% { box-shadow: 0 0 8px rgba(255, 183, 119, 0.18); }
+  100% { box-shadow: 0 0 20px rgba(255, 183, 119, 0.55); }
 }
 
 @keyframes starShift {

@@ -34,6 +34,35 @@ const memoryLabels = [
   '...you.',
 ];
 
+const memoryChoices = [
+  { title: 'What I adore about you', copy: 'Your smile can turn an ordinary day into something I want to remember forever.' },
+  { title: 'A memory I keep replaying', copy: 'The little moments with you stay with me long after the day is over.' },
+  { title: 'Why you make life better', copy: 'You bring warmth, laughter, and a kind of peace that feels like home.' },
+];
+
+const twentyWishes = [
+  'A year full of laughter.',
+  'Dreams that finally feel close.',
+  'Peace on the difficult days.',
+  'Courage for every new beginning.',
+  'Adventures worth remembering.',
+  'Confidence in the woman you are.',
+  'Soft mornings and beautiful nights.',
+  'People who celebrate you fully.',
+  'Reasons to smile for no reason.',
+  'A heart that feels understood.',
+  'Success in everything you pursue.',
+  'A life that feels completely yours.',
+  'Surprises that make you glow.',
+  'More moments that feel like magic.',
+  'Love that meets you everywhere.',
+  'Strength when the world feels heavy.',
+  'Joy in the smallest details.',
+  'Memories we will keep forever.',
+  'Every beautiful thing you deserve.',
+  'The knowledge that you are deeply loved.',
+];
+
 const digitalChars = Array.from({ length: 24 }, (_, index) => ({
   id: index,
   value: secretRunes[index % secretRunes.length],
@@ -194,6 +223,8 @@ function App() {
   const [cardOpen, setCardOpen] = useState(false);
   const [secretUnlocked, setSecretUnlocked] = useState(false);
   const [frontMemory, setFrontMemory] = useState(0);
+  const [selectedMemory, setSelectedMemory] = useState(0);
+  const [revealedWishes, setRevealedWishes] = useState(new Set());
   const audioRef = useRef(null);
 
   const startMusic = () => {
@@ -349,8 +380,10 @@ function App() {
           <div className="starfield" aria-hidden="true" />
           <div className="dust-field" aria-hidden="true" />
           <div className="night-title-wrap">
-            <div className="night-title">MY LOVE</div>
-            <div className="night-subtitle">MI AMOR</div>
+            <div className="royal-crown" aria-hidden="true" />
+            <div className="night-title">ALL RISE</div>
+            <div className="night-subtitle">FOR HER MAJESTY, THE QUEEN</div>
+            <p className="royal-copy">The world of 20s begins with you.</p>
           </div>
         </section>
       )}
@@ -419,21 +452,59 @@ function App() {
 
       {stage === 8 && (
         <section className="scene memory-scene is-active">
-          <div className="single-photo-wrap">
-            <div className="single-photo-frame">
-              <img src={birthdayData.photos[0]} alt="My love" />
+          <div className="memory-choice-wrap">
+            <div className="memory-choice-heading">
+              <span>Choose a memory, my beloved</span>
+              <small>Each one has something I want you to know.</small>
             </div>
-            <div className="photo-caption">One memory.</div>
+            <div className="memory-choice-grid">
+              {memoryChoices.map((choice, index) => (
+                <button
+                  type="button"
+                  key={choice.title}
+                  className={`memory-choice ${selectedMemory === index ? 'is-selected' : ''}`}
+                  onClick={() => setSelectedMemory(index)}
+                >
+                  <img src={birthdayData.photos[index]} alt={choice.title} />
+                  <span>{choice.title}</span>
+                </button>
+              ))}
+            </div>
+            <div className="memory-choice-message" key={selectedMemory}>
+              <strong>{memoryChoices[selectedMemory].title}</strong>
+              <p>{memoryChoices[selectedMemory].copy}</p>
+            </div>
           </div>
         </section>
       )}
 
       {stage === 10 && (
-        <section className="scene quiet-scene is-active">
-          <div className="quiet-copy">
-            <p>But...</p>
-            <p>there's something I really want you to remember.</p>
-            <p>You deserve to be celebrated.</p>
+        <section className="scene wishes-scene is-active">
+          <div className="wishes-heading">
+            <span>Twenty wishes for your twentieth year</span>
+            <small>Open them one by one.</small>
+          </div>
+          <div className="wish-orbit">
+            {twentyWishes.map((wish, index) => (
+              <button
+                type="button"
+                key={wish}
+                className={`wish-point ${revealedWishes.has(index) ? 'is-open' : ''}`}
+                style={{
+                  left: `${50 + ((index - 10) * 4)}%`,
+                  top: `${50 + (((index % 5) - 2) * 13)}%`,
+                  '--wish-rotation': `${index * -2}deg`,
+                  animationDelay: `${index * -0.12}s`,
+                }}
+                onClick={() => setRevealedWishes((current) => new Set(current).add(index))}
+                aria-label={`Open wish ${index + 1}`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <div className="wish-message">
+            {revealedWishes.size === 0 ? 'Tap a number and open a wish made for you.' : twentyWishes[Math.max(...revealedWishes)]}
           </div>
         </section>
       )}
